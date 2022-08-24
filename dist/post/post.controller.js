@@ -25,6 +25,9 @@ let PostController = class PostController {
     findOne(id) {
         return this.postsService.findOne(id);
     }
+    createPost(post) {
+        return this.postsService.create(post);
+    }
 };
 __decorate([
     (0, common_1.Get)(),
@@ -39,6 +42,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Object)
 ], PostController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Post)('/create'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Object)
+], PostController.prototype, "createPost", null);
 PostController = __decorate([
     (0, common_1.Controller)('post'),
     __metadata("design:paramtypes", [post_service_1.PostService])

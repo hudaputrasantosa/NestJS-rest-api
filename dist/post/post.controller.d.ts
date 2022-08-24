@@ -5,4 +5,5 @@ export declare class PostController {
     constructor(postsService: PostService);
     findAll(): Array<PostModel>;
     findOne(id: number): PostModel;
+    createPost(post: PostModel): PostModel;
 }
