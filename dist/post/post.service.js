@@ -6,19 +6,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.PostService = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const post_module_1 = require("./post/post.module");
-let AppModule = class AppModule {
+let PostService = class PostService {
+    constructor() {
+        this.post = [];
+    }
+    findAll() {
+        return this.post;
+    }
+    findOne(id) {
+        const post = this.post.find(post => post.id === id);
+        if (!post) {
+            throw new common_1.NotFoundException('Post not found!');
+        }
+        return post;
+    }
 };
-AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [post_module_1.PostModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
-    })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+PostService = __decorate([
+    (0, common_1.Injectable)()
+], PostService);
+exports.PostService = PostService;
+//# sourceMappingURL=post.service.js.map
