@@ -4,6 +4,7 @@ import { PostModel } from './post.interface';
 @Injectable()
 export class PostService {
    private posts : Array<PostModel> = [];
+   logger: any;
   
    public findAll(): Array<PostModel> {
       return this.posts;
@@ -45,5 +46,28 @@ export class PostService {
          throw new NotFoundException('this post not found!');
       }
       this.posts.splice(index, 1);
+    }
+
+    public update(id:number, post : PostModel):PostModel{
+      this.logger.log(`updating post with id: ${id}`);
+      const index : number = this.posts.findIndex(post=> post.id === id);
+      
+      if(index == -1){
+         throw new NotFoundException('this post not found!');
+      }
+
+      const titleExist : Boolean = this.posts.some(
+         (item)=> item.title == post.title && item.id !== id,
+      );
+      if(titleExist){
+         throw new UnprocessableEntityException('Post title already exist!');
+      }
+      const blogPost : PostModel = {
+         ...post,
+         id,
+      };
+
+      this.posts[index] = blogPost;
+      return blogPost;
     }
 }  
