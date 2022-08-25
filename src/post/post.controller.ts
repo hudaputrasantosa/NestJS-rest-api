@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { PostModel } from './post.interface';
 import { PostService } from './post.service';
 
@@ -23,5 +23,10 @@ export class PostController {
    @Delete(':id')
    public deletePost(@Param('id', ParseIntPipe) id : number) : void{
       return this.postsService.delete(id);
+   }
+
+   @Put(':id')
+   public updatePost(@Param('id', ParseIntPipe) id : number, @Body() post : PostModel) : PostModel{
+      return this.postsService.update(id, post);
    }
 }
