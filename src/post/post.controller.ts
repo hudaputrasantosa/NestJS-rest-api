@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { PostModel } from './post.interface';
 import { PostService } from './post.service';
 
@@ -18,5 +18,10 @@ export class PostController {
    @Post('/create')
    public createPost(@Body() post: PostModel): PostModel{
       return this.postsService.create(post);
+   }
+
+   @Delete(':id')
+   public deletePost(@Param('id', ParseIntPipe) id : number) : void{
+      return this.postsService.delete(id);
    }
 }

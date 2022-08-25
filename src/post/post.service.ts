@@ -38,4 +38,12 @@ export class PostService {
       return blogPost;
     }
 
+    public delete(id : number) : void{
+      const index : number = this.posts.findIndex(post => post.id === id);
+
+      if(index === -1){
+         throw new NotFoundException('this post not found!');
+      }
+      this.posts.splice(index, 1);
+    }
 }  
