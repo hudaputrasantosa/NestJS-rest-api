@@ -5,14 +5,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var PostService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostService = void 0;
 const common_1 = require("@nestjs/common");
-let PostService = class PostService {
+let PostService = PostService_1 = class PostService {
     constructor() {
         this.posts = [];
+        this.logger = new common_1.Logger(PostService_1.name);
     }
     findAll() {
+        this.logger.log('return all post');
         return this.posts;
     }
     findOne(id) {
@@ -33,8 +36,29 @@ let PostService = class PostService {
         this.posts.push(blogPost);
         return blogPost;
     }
+    delete(id) {
+        const index = this.posts.findIndex(post => post.id === id);
+        if (index === -1) {
+            throw new common_1.NotFoundException('this post not found!');
+        }
+        this.posts.splice(index, 1);
+    }
+    update(id, post) {
+        this.logger.log('updating post with id : ${id}');
+        const index = this.posts.findIndex(post => post.id === id);
+        if (index == -1) {
+            throw new common_1.NotFoundException('this post not found!');
+        }
+        const titleExist = this.posts.some((item) => item.title == post.title && item.id !== id);
+        if (titleExist) {
+            throw new common_1.UnprocessableEntityException('Post title already exist!');
+        }
+        const blogPost = Object.assign(Object.assign({}, post), { id });
+        this.posts[index] = blogPost;
+        return blogPost;
+    }
 };
-PostService = __decorate([
+PostService = PostService_1 = __decorate([
     (0, common_1.Injectable)()
 ], PostService);
 exports.PostService = PostService;

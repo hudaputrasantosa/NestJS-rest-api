@@ -1,4 +1,4 @@
-export interface PostModel {
+export declare class PostModel {
     id?: number;
     date: Date;
     title: string;

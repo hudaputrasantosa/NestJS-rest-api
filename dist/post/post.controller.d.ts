@@ -6,4 +6,6 @@ export declare class PostController {
     findAll(): Array<PostModel>;
     findOne(id: number): PostModel;
     createPost(post: PostModel): PostModel;
+    deletePost(id: number): void;
+    updatePost(id: number, post: PostModel): PostModel;
 }

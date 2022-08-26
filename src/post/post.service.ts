@@ -1,12 +1,13 @@
-import { Injectable, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException, UnprocessableEntityException } from '@nestjs/common';
 import { PostModel } from './post.interface';
 
 @Injectable()
 export class PostService {
    private posts : Array<PostModel> = [];
-   logger: any;
+   private readonly logger = new Logger(PostService.name);
   
    public findAll(): Array<PostModel> {
+      this.logger.log('return all post');
       return this.posts;
     }
 
@@ -49,7 +50,7 @@ export class PostService {
     }
 
     public update(id:number, post : PostModel):PostModel{
-      this.logger.log(`updating post with id: ${id}`);
+      this.logger.log('updating post with id : ${id}');
       const index : number = this.posts.findIndex(post=> post.id === id);
       
       if(index == -1){
